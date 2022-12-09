@@ -11,6 +11,11 @@ const receiveCurrenciesInfo = (currenciesInfo) => ({
   currencies: currenciesInfo,
 });
 
+export const addExpenses = (expenses) => ({
+  type: 'ADD_EXPENSES',
+  expenses,
+});
+
 export const fetchCurrencies = () => (
   async (dispatch) => {
     const currenciesInfo = await getCurrencies();

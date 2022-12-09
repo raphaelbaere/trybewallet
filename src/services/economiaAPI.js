@@ -18,3 +18,9 @@ const getCurrencies = async () => {
 };
 
 export default getCurrencies;
+
+export const getExchangeRates = async () => {
+  const response = await fetch(CURRENCIES_BASE_API);
+  const json = await response.json();
+  return json;
+};
