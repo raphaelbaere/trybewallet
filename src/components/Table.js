@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleExpenseDelete } from '../redux/actions';
+import { editMode, handleExpenseDelete } from '../redux/actions';
 
 class Table extends Component {
+  handleEditBtn = (e, id) => {
+    const { dispatch } = this.props;
+    dispatch(editMode(id));
+  };
+
   handleDeleteBtn = (e, id) => {
     const { expenses, dispatch } = this.props;
     const expenseToBeDeletedIndex = expenses.findIndex((expense) => expense.id === id);
@@ -34,6 +39,14 @@ class Table extends Component {
         <td>Real</td>
         <td>
           <button
+            type="button"
+            id="edit-btn"
+            data-testid="edit-btn"
+            onClick={ (e) => this.handleEditBtn(e, id) }
+          >
+            Edit
+          </button>
+          <button
             id="delete-btn"
             type="button"
             data-testid="delete-btn"
@@ -60,7 +73,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {showExpenses}
+          {showExpenses.sort((a, b) => a.key - b.key)}
         </tbody>
       </table>
     );

@@ -6,10 +6,10 @@ const INITIAL_STATE = {
   editor: false, // valor booleano que indica de uma despesa está sendo editada
   idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
   totalExpensesSum: 0,
+  editing: false,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
-  const { expenses, expenseToBeDeleted } = action;
   switch (action.type) {
   case 'RECEIVE_CURRENCIES':
     return {
@@ -20,18 +20,23 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.expenses],
-      totalExpensesSum: state.totalExpensesSum
-      + (+expenses.exchangeRates[expenses.currency].ask * expenses.value),
     };
   case 'EXPENSES_DELETED_ID':
     return {
       ...state,
       expenses: action.expenses,
-      totalExpensesSum: Math.abs(state.totalExpensesSum
-      - (
-        +expenseToBeDeleted.exchangeRates[expenseToBeDeleted.currency].ask
-        * expenseToBeDeleted.value
-      )),
+    };
+  case 'EDIT_MODE':
+    return {
+      ...state,
+      editing: true,
+      idToEdit: action.id,
+    };
+  case 'EDIT_EXPENSES':
+    return {
+      ...state,
+      expenses: action.expenses.sort((a, b) => a.id - b.id),
+      editing: false,
     };
   default:
     return state;

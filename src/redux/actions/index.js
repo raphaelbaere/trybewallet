@@ -22,6 +22,16 @@ export const addExpenses = (expenses) => ({
   expenses,
 });
 
+export const editMode = (id) => ({
+  type: 'EDIT_MODE',
+  id,
+});
+
+export const editExpenses = (editedExpenses) => ({
+  type: 'EDIT_EXPENSES',
+  expenses: editedExpenses,
+});
+
 export const fetchCurrencies = () => (
   async (dispatch) => {
     const currenciesInfo = await getCurrencies();
