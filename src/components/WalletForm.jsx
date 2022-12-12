@@ -150,7 +150,6 @@ WalletForm.propTypes = {
     length: PropTypes.number.isRequired,
   }).isRequired,
   idToEdit: PropTypes.string.isRequired,
-  totalExpensesSum: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => (
