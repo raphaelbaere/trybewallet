@@ -15,7 +15,7 @@ class WalletForm extends Component {
   };
 
   handleExpenses = async (e) => {
-    const { dispatch, expenses, idToEdit, totalExpensesSum } = this.props;
+    const { dispatch, expenses, idToEdit } = this.props;
     const { valueInput, description, currency, method, tag, id } = this.state;
     if (e.target.innerText === 'Adicionar despesa') {
       const exchangeRates = await getExchangeRates();
