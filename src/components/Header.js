@@ -18,9 +18,13 @@ class Header extends Component {
 const mapStateToProps = (state) => (
   { email: state.user.email, totalExpensesSum: state.wallet.totalExpensesSum });
 
+Header.defaultProps = {
+  totalExpensesSum: [],
+};
+
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  totalExpensesSum: PropTypes.isRequired,
+  totalExpensesSum: PropTypes,
 };
 
 export default connect(mapStateToProps)(Header);
