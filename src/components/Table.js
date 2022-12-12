@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { handleExpenseDelete } from '../redux/actions';
 
 class Table extends Component {
+  handleDeleteBtn = (e, id) => {
+    const { expenses, dispatch } = this.props;
+    const expenseToBeDeletedIndex = expenses.findIndex((expense) => expense.id === id);
+    const expenseToBeDeleted = expenses[expenseToBeDeletedIndex];
+    const expenseWithDeletedId = expenses.filter((expense) => expense.id !== id);
+    dispatch(handleExpenseDelete(expenseToBeDeleted, expenseWithDeletedId));
+  };
+
   render() {
     const { expenses } = this.props;
     const showExpenses = expenses.map(({
@@ -23,6 +32,16 @@ class Table extends Component {
         <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
         <td>{(Number(exchangeRates[currency].ask) * Number(value)).toFixed(2)}</td>
         <td>Real</td>
+        <td>
+          <button
+            id="delete-btn"
+            type="button"
+            data-testid="delete-btn"
+            onClick={ (e) => this.handleDeleteBtn(e, id) }
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     ));
     return (
@@ -56,6 +75,7 @@ Table.defaultProps = {
 };
 
 Table.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({})),
 };
 

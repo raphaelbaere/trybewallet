@@ -11,6 +11,12 @@ const receiveCurrenciesInfo = (currenciesInfo) => ({
   currencies: currenciesInfo,
 });
 
+export const handleExpenseDelete = (expenseToBeDeleted, expensesDeleted) => ({
+  type: 'EXPENSES_DELETED_ID',
+  expenses: expensesDeleted,
+  expenseToBeDeleted,
+});
+
 export const addExpenses = (expenses) => ({
   type: 'ADD_EXPENSES',
   expenses,

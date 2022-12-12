@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
-  const { expenses } = action;
+  const { expenses, expenseToBeDeleted } = action;
   switch (action.type) {
   case 'RECEIVE_CURRENCIES':
     return {
@@ -22,6 +22,16 @@ const wallet = (state = INITIAL_STATE, action) => {
       expenses: [...state.expenses, action.expenses],
       totalExpensesSum: state.totalExpensesSum
       + (+expenses.exchangeRates[expenses.currency].ask * expenses.value),
+    };
+  case 'EXPENSES_DELETED_ID':
+    return {
+      ...state,
+      expenses: action.expenses,
+      totalExpensesSum: Math.abs(state.totalExpensesSum
+      - (
+        +expenseToBeDeleted.exchangeRates[expenseToBeDeleted.currency].ask
+        * expenseToBeDeleted.value
+      )),
     };
   default:
     return state;
