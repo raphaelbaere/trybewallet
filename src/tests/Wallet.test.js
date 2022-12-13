@@ -38,7 +38,7 @@ describe('Cadastro de usuário', () => {
 
     const valueInput = screen.getByTestId('value-input');
     const descInput = screen.getByTestId('description-input');
-    const currencyInput = await screen.getByTestId('currency-input');
+    const currencyInput = screen.getByTestId('currency-input');
     const methodInput = screen.getByTestId('method-input');
     const tagInput = screen.getByTestId('tag-input');
     const cashOption = screen.getByRole('option', { name: 'Dinheiro' });
@@ -51,5 +51,13 @@ describe('Cadastro de usuário', () => {
     userEvent.selectOptions(methodInput, cashOption);
     userEvent.selectOptions(tagInput, eatOption);
     userEvent.click(addExpenses);
+    const firstDescCell = await screen.findByRole('cell', { name: /onze dólares/i });
+    const tagCell = await screen.findByRole('cell', { name: /Alimentação/i });
+    const methodCell = await screen.findByRole('cell', { name: /Dinheiro/i });
+    const valueCell = await screen.findByRole('cell', { name: /11/i });
+    expect(firstDescCell).toBeInTheDocument();
+    expect(tagCell).toBeInTheDocument();
+    expect(methodCell).toBeInTheDocument();
+    expect(valueCell).toBeInTheDocument();
   });
 });

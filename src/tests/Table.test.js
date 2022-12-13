@@ -24,6 +24,7 @@ describe('Testa a Table e...', () => {
     exchangeRates: mockData,
   };
   test('Verifica se é possível editar os elementos da tabela.', async () => {
+    const addExpense = 'Adicionar despesa';
     const initialEntries = ['/carteira'];
     const initialState = {
       wallet: {
@@ -33,7 +34,7 @@ describe('Testa a Table e...', () => {
         currencies: Object.keys(mockData),
       } };
     renderWithRouterAndRedux(<App />, { initialEntries, initialState });
-    const editButtonForm = screen.getByRole('button', { name: 'Adicionar despesa' });
+    const editButtonForm = screen.getByRole('button', { name: addExpense });
     const editButton = screen.getAllByTestId('edit-btn');
     userEvent.click(editButton[0]);
     expect(editButtonForm.textContent).toBe('Editar despesa');
@@ -51,9 +52,9 @@ describe('Testa a Table e...', () => {
     userEvent.type(descInput, 'Vinte euros');
     userEvent.selectOptions(methodInput, cashOption);
     userEvent.selectOptions(tagInput, eatOption);
-    const buttonEditClickable = screen.findByRole('button', { name: 'Editar despesa' });
-    userEvent.click(buttonEditClickable);
-    expect(editButtonForm.textContent).toBe('Adicionar despesa');
+    userEvent.click(editButtonForm);
+    const buttonEditable = await screen.findByRole('button', { name: addExpense });
+    expect(buttonEditable.textContent).toBe(addExpense);
   });
   test('Verifica se é possível excluir um elemento da tabela', () => {
     const initialEntries = ['/carteira'];

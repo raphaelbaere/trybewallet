@@ -14,10 +14,10 @@ class WalletForm extends Component {
     id: 0,
   };
 
-  handleExpenses = async (e) => {
-    const { dispatch, expenses, idToEdit } = this.props;
+  handleExpenses = async () => {
+    const { dispatch, expenses, idToEdit, editing } = this.props;
     const { valueInput, description, currency, method, tag, id } = this.state;
-    if (e.target.innerText === 'Adicionar despesa') {
+    if (!editing) {
       const exchangeRates = await getExchangeRates();
       const expensesObj = {
         id,
@@ -126,7 +126,7 @@ class WalletForm extends Component {
           </label>
           <button
             type="button"
-            onClick={ (e) => this.handleExpenses(e) }
+            onClick={ this.handleExpenses }
           >
             {editing ? 'Editar despesa' : 'Adicionar despesa'}
           </button>
